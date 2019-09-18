@@ -87,4 +87,8 @@ $(function() {
             }
         })
     })
+
+    $('[type="reset"]').click(function(){
+           $('#form').data("bootstrapValidator").resetForm();
+    })
     });
