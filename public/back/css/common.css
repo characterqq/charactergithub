@@ -29,6 +29,9 @@ ul {
 .red {
     color: #a94442;
 }
+.mb_20 {
+    margin-bottom: 20px;
+}
 /*侧边栏*/
 
 .lt_aside {
