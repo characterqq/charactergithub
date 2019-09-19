@@ -26,7 +26,9 @@ ul {
 .mt_20 {
     margin-top: 20px;
 }
-
+.red {
+    color: #a94442;
+}
 /*侧边栏*/
 
 .lt_aside {
@@ -37,6 +39,10 @@ ul {
     top: 0;
     background-color: #222D32;
     z-index: 55;
+    transition: all 1s;
+}
+.lt_aside.hidemenu {
+    left:-180px;
 }
 .brand {
     height: 50px;
@@ -89,6 +95,10 @@ ul {
     height: 1000px;
     background-color: pink;
     padding-top: 50px;
+    transition: all 1s;
+}
+.lt_main.hidemenu {
+    padding-left: 0px;
 }
 .lt_topbar {
     width: 100%;
@@ -98,6 +108,10 @@ ul {
     left: 0;
     top:0;
     padding-left: 180px;
+    transition: all 1s;
+}
+.lt_topbar.hidemenu {
+    padding: 0;
 }
 .lt_topbar a {
     width: 50px;
