@@ -73,6 +73,7 @@ $(function(){
 
         $('[name="categoryId"]').val( id );
 
+        $('#form').data("bootstrapValidator").updateStatus("categoryId", "VALID");
     })
 
 //    4.进行文件上传初始化
@@ -88,6 +89,76 @@ $(function(){
             $('#imgBox img').attr("src", imgUrl);
         //    将图片地址，设置给 input
             $('[name="brandLogo"]').val( imgUrl );
+
+        //    手动重置隐藏域的效验状态
+            $('#form').data("bootstrapValidator").updateStatus("brandLogo","VALID");
         }
+    })
+
+//    5. 实现表单效验
+    $('#form').bootstrapValidator({
+        //1. 指定不校验的类型，默认为[':disabled', ':hidden', ':not(:visible)'],可以不设置
+        excluded: [],
+
+
+    //    配置图标
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+    //    配置字段
+        fields: {
+            categoryId: {
+                validators: {
+                        notEmpty: {
+                            message: "请选择一级分类"
+                        }
+                }
+            },
+            brandName: {
+                validators: {
+                    notEmpty: {
+                        message: "请输入二级分类"
+                    }
+                }
+            },
+            brandLogo:{
+                validators: {
+                    notEmpty: {
+                        message: "请输入二级分类"
+                    }
+                }
+            }
+
+        }
+    })
+
+//    6.注册表单效验成功事件，阻止默认提交，通过ajax进行提交
+    $('#form').on("success.form.bv", function( e ) {
+        e.preventDefault();
+
+        //    通过 ajax提交
+        $.ajax({
+            type: "post",
+            url: "/category/addSecondCategory",
+            data: $('#form').serialize(),
+            dataType: "json",
+            success: function (info) {
+                console.log(info);
+                if( info.success ){
+                //    关闭模态框
+                    $('#addModal').modal("hide");
+                //    重新渲染页面
+                    currentPage = 1;
+                    render();
+                //    重置模态框的表单
+                    $('#form').data("bootstrapValidator").resetForm(true);
+                //    手动重置文本内容，和图片路径
+                    $('#dropdownText').text("请选择一级分类");
+                    $('#imgBox img').attr("src", "images/none.png");
+                }
+            }
+        })
     })
 });
